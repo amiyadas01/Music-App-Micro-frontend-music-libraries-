@@ -7,7 +7,7 @@ interface SongCardProps {
 }
 
 export function SongCard({ song, userRole }: SongCardProps) {
-  const deleteMutation = useDeleteSongMutation();
+  const deleteMutation = useDeleteSongMutation({ userRole });
 
   return (
     <div className="group rounded-2xl border border-gray-100 bg-white hover:border-transparent hover:shadow-xl hover:shadow-violet/10 transition-all duration-300 overflow-hidden flex items-center p-4 gap-4">

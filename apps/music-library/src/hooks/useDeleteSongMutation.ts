@@ -7,11 +7,20 @@ async function deleteSong(id: string): Promise<void> {
   if (!response.ok) throw new Error('Failed to delete song')
 }
 
-export function useDeleteSongMutation() {
+interface UseDeleteSongMutationArgs {
+  userRole: 'admin' | 'user' | null
+}
+
+export function useDeleteSongMutation({ userRole }: UseDeleteSongMutationArgs = { userRole: null }) {
   const queryClient = useQueryClient()
   
   return useMutation({
-    mutationFn: deleteSong,
+    mutationFn: (id: string) => {
+      if (userRole !== 'admin') {
+        throw new Error('Only admin can delete songs')
+      }
+      return deleteSong(id)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['songs'] })
     },

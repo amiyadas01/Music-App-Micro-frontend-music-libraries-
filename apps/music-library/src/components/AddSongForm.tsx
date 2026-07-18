@@ -1,29 +1,29 @@
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useAddSongMutation } from '../hooks/useAddSongMutation'
-import type { Song } from '@music-library-app/shared-types'
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useAddSongMutation } from "../hooks/useAddSongMutation";
+import type { Song } from "@music-library-app/shared-types";
 
 interface AddSongFormProps {
-  userRole: 'admin' | 'user' | null
+  userRole: "admin" | "user" | null;
 }
 
 interface AddSongFormInputs {
-  title: string
-  artist: string
-  album: string
-  year: string
+  title: string;
+  artist: string;
+  album: string;
+  year: string;
 }
 
 export const AddSongForm: React.FC<AddSongFormProps> = ({ userRole }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const addMutation = useAddSongMutation()
+  const [isOpen, setIsOpen] = useState(false);
+  const addMutation = useAddSongMutation({ userRole });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<AddSongFormInputs>()
+  } = useForm<AddSongFormInputs>();
 
   const onSubmit = handleSubmit((data) => {
     addMutation.mutate(
@@ -35,15 +35,15 @@ export const AddSongForm: React.FC<AddSongFormProps> = ({ userRole }) => {
       },
       {
         onSuccess: () => {
-          reset()
-          setIsOpen(false)
+          reset();
+          setIsOpen(false);
         },
-      }
-    )
-  })
+      },
+    );
+  });
 
-  if (userRole !== 'admin') {
-    return null
+  if (userRole !== "admin") {
+    return null;
   }
 
   if (!isOpen) {
@@ -54,7 +54,7 @@ export const AddSongForm: React.FC<AddSongFormProps> = ({ userRole }) => {
       >
         Add Song
       </button>
-    )
+    );
   }
 
   return (
@@ -64,37 +64,45 @@ export const AddSongForm: React.FC<AddSongFormProps> = ({ userRole }) => {
         <div>
           <label className="block mb-1 text-sm">Title *</label>
           <input
-            {...register('title', { required: 'Title is required' })}
+            {...register("title", { required: "Title is required" })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg"
           />
-          {errors.title && <p className="text-red-500 text-xs">{errors.title.message}</p>}
+          {errors.title && (
+            <p className="text-red-500 text-xs">{errors.title.message}</p>
+          )}
         </div>
         <div>
           <label className="block mb-1 text-sm">Artist *</label>
           <input
-            {...register('artist', { required: 'Artist is required' })}
+            {...register("artist", { required: "Artist is required" })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg"
           />
-          {errors.artist && <p className="text-red-500 text-xs">{errors.artist.message}</p>}
+          {errors.artist && (
+            <p className="text-red-500 text-xs">{errors.artist.message}</p>
+          )}
         </div>
         <div>
           <label className="block mb-1 text-sm">Album *</label>
           <input
-            {...register('album', { required: 'Album is required' })}
+            {...register("album", { required: "Album is required" })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg"
           />
-          {errors.album && <p className="text-red-500 text-xs">{errors.album.message}</p>}
+          {errors.album && (
+            <p className="text-red-500 text-xs">{errors.album.message}</p>
+          )}
         </div>
         <div>
           <label className="block mb-1 text-sm">Year *</label>
           <input
-            {...register('year', {
-              required: 'Year is required',
-              pattern: { value: /^\d{4}$/, message: 'Year must be 4 digits' },
+            {...register("year", {
+              required: "Year is required",
+              pattern: { value: /^\d{4}$/, message: "Year must be 4 digits" },
             })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg"
           />
-          {errors.year && <p className="text-red-500 text-xs">{errors.year.message}</p>}
+          {errors.year && (
+            <p className="text-red-500 text-xs">{errors.year.message}</p>
+          )}
         </div>
         <div className="flex gap-2">
           <button
@@ -102,7 +110,7 @@ export const AddSongForm: React.FC<AddSongFormProps> = ({ userRole }) => {
             disabled={addMutation.isPending}
             className="px-4 py-2 bg-violet-500 text-white rounded-lg hover:bg-violet-600 disabled:opacity-50"
           >
-            {addMutation.isPending ? 'Adding...' : 'Add Song'}
+            {addMutation.isPending ? "Adding..." : "Add Song"}
           </button>
           <button
             type="button"
@@ -114,5 +122,5 @@ export const AddSongForm: React.FC<AddSongFormProps> = ({ userRole }) => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
