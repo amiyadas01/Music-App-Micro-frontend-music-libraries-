@@ -1,0 +1,30 @@
+import type { Song } from "@music-library-app/shared-types";
+
+interface SongCardProps {
+  song: Song;
+}
+
+export function SongCard({ song }: SongCardProps) {
+  return (
+    <div className="group rounded-2xl border border-gray-100 bg-white hover:border-transparent hover:shadow-xl hover:shadow-violet/10 transition-all duration-300 overflow-hidden flex items-center p-4 gap-4">
+      <div className="w-16 h-16 flex-shrink-0 bg-gradient-to-br from-violet/10 via-blue/10 to-coral/10 flex items-center justify-center relative overflow-hidden rounded-xl">
+        {/* Vinyl disc — spins gently on hover */}
+        <div className="relative w-12 h-12 rounded-full bg-ink/90 flex items-center justify-center shadow-inner group-hover:animate-[spin_3s_linear_infinite] transition-transform">
+          <div className="absolute inset-1 rounded-full border border-white/10" />
+          <div className="absolute inset-2.5 rounded-full border border-white/10" />
+          <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-violet to-coral" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+      </div>
+      <div className="flex-1 min-w-0">
+        <h3 className="text-sm font-bold text-ink line-clamp-1 group-hover:text-violet transition-colors">
+          {song.title}
+        </h3>
+        <p className="text-xs text-gray-500 mt-1 line-clamp-1">{song.artist}</p>
+        <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">
+          {song.album}
+        </p>
+      </div>
+    </div>
+  );
+}
