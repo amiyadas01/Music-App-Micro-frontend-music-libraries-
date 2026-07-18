@@ -33,7 +33,10 @@ interface MusicLibraryContentProps {
   token: string | null;
 }
 
-function MusicLibraryContent({ userRole, token }: MusicLibraryContentProps) {
+function MusicLibraryContent({
+  userRole,
+  token: _token,
+}: MusicLibraryContentProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [queryTerm, setQueryTerm] = useState(DEFAULT_SEARCH_TERM);
   const [activeGroup, setActiveGroup] = useState<
