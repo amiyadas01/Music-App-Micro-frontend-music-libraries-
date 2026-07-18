@@ -7,6 +7,7 @@ interface GroupTabsProps {
   songs: Song[];
   activeGroup: "all" | "album" | "artist" | "title";
   onGroupChange: (group: "all" | "album" | "artist" | "title") => void;
+  userRole: "admin" | "user" | null;
 }
 
 const GROUP_LABELS: Record<"all" | "album" | "artist" | "title", string> = {
@@ -20,6 +21,7 @@ export function GroupTabs({
   songs,
   activeGroup,
   onGroupChange,
+  userRole,
 }: GroupTabsProps) {
   const groups = useMemo(
     () => ({
@@ -82,7 +84,7 @@ export function GroupTabs({
           ))}
         </div>
 
-        <SongList title="All Songs" songs={songs} />
+        <SongList title="All Songs" songs={songs} userRole={userRole} />
       </div>
     );
   }
@@ -148,6 +150,7 @@ export function GroupTabs({
                   key={`${group}-${title}`}
                   title={title}
                   songs={groupSongs}
+                  userRole={userRole}
                 />
               ))}
           </div>
@@ -160,6 +163,7 @@ export function GroupTabs({
             key={`${activeGroup}-${title}`}
             title={title}
             songs={groupSongs}
+            userRole={userRole}
           />
         ))}
       </div>

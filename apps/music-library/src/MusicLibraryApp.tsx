@@ -2,12 +2,10 @@ import { useState, useMemo } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useDebouncedCallback } from "./hooks/useDebounced";
 import { useSongsQuery } from "./hooks/useSongsQuery";
-import { useAddSongMutation } from "./hooks/useAddSongMutation";
-import { useDeleteSongMutation } from "./hooks/useDeleteSongMutation";
 import { filterSongsByText } from "./lib/songTransforms";
-import { getStoredSongs } from "./mocks/songStore";
 import { SongSearchInput } from "./components/SongSearchInput";
 import { GroupTabs } from "./components/GroupTabs";
+import { AddSongForm } from "./components/AddSongForm";
 import { SkeletonLoader } from "./components/SkeletonLoader";
 
 const queryClient = new QueryClient();
@@ -31,8 +29,8 @@ function GlobalKeyframes() {
 }
 
 interface MusicLibraryContentProps {
-  userRole: 'admin' | 'user' | null
-  token: string | null
+  userRole: "admin" | "user" | null;
+  token: string | null;
 }
 
 function MusicLibraryContent({ userRole, token }: MusicLibraryContentProps) {
@@ -48,27 +46,6 @@ function MusicLibraryContent({ userRole, token }: MusicLibraryContentProps) {
   const handleSearchChange = (term: string) => {
     setSearchTerm(term);
     debouncedSetQueryTerm(term);
-  };
-
-  // TODO: remove in Phase 5
-  const addMutation = useAddSongMutation();
-  const deleteMutation = useDeleteSongMutation();
-
-  const handleAddTestSong = () => {
-    addMutation.mutate({
-      title: "Test Song",
-      artist: "Test Artist",
-      album: "Test Album",
-      year: "2024",
-    });
-  };
-
-  const handleDeleteLastSong = () => {
-    const storedSongs = getStoredSongs();
-    if (storedSongs.length > 0) {
-      const lastSong = storedSongs[storedSongs.length - 1];
-      deleteMutation.mutate(lastSong.id);
-    }
   };
 
   const { data, isLoading, isFetching, isError } = useSongsQuery(queryTerm);
@@ -148,21 +125,7 @@ function MusicLibraryContent({ userRole, token }: MusicLibraryContentProps) {
               isSearching={isFetching}
             />
           </div>
-          {/* TODO: remove in Phase 5 */}
-          <div className="flex gap-2">
-            <button
-              onClick={handleAddTestSong}
-              disabled={addMutation.isPending}
-            >
-              [dev] Add test song
-            </button>
-            <button
-              onClick={handleDeleteLastSong}
-              disabled={deleteMutation.isPending}
-            >
-              [dev] Delete last song
-            </button>
-          </div>
+          <AddSongForm userRole={userRole} />
         </div>
       </header>
 
@@ -207,6 +170,7 @@ function MusicLibraryContent({ userRole, token }: MusicLibraryContentProps) {
             songs={filteredSongs}
             activeGroup={activeGroup}
             onGroupChange={setActiveGroup}
+            userRole={userRole}
           />
         )}
       </main>
@@ -215,11 +179,14 @@ function MusicLibraryContent({ userRole, token }: MusicLibraryContentProps) {
 }
 
 interface MusicLibraryAppProps {
-  userRole: 'admin' | 'user' | null
-  token: string | null
+  userRole: "admin" | "user" | null;
+  token: string | null;
 }
 
-export default function MusicLibraryApp({ userRole, token }: MusicLibraryAppProps) {
+export default function MusicLibraryApp({
+  userRole,
+  token,
+}: MusicLibraryAppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <GlobalKeyframes />

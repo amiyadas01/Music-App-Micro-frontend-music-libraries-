@@ -6,9 +6,10 @@ import type { Song } from "@music-library-app/shared-types";
 interface SongListProps {
   title: string;
   songs: Song[];
+  userRole: "admin" | "user" | null;
 }
 
-export function SongList({ title, songs }: SongListProps) {
+export function SongList({ title, songs, userRole }: SongListProps) {
   const sortedSongs = useMemo(() => sortSongs(songs, "title", "asc"), [songs]);
 
   return (
@@ -22,7 +23,7 @@ export function SongList({ title, songs }: SongListProps) {
       </div>
       <div className="flex flex-col gap-3">
         {sortedSongs.map((song) => (
-          <SongCard key={song.id} song={song} />
+          <SongCard key={song.id} song={song} userRole={userRole} />
         ))}
       </div>
     </div>
