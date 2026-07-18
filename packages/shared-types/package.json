@@ -1,0 +1,6 @@
+{
+  "name": "@music-library-app/shared-types",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "types": "index.ts"
+}
