@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useDebouncedCallback } from "./hooks/useDebounced";
 import { useSongsQuery } from "./hooks/useSongsQuery";
@@ -7,6 +7,15 @@ import { SongSearchInput } from "./components/SongSearchInput";
 import { GroupTabs } from "./components/GroupTabs";
 import { AddSongForm } from "./components/AddSongForm";
 import { SkeletonLoader } from "./components/SkeletonLoader";
+
+async function enableMocking() {
+  if (import.meta.env.DEV) {
+    const { worker } = await import("./mocks/browser");
+    return worker.start();
+  }
+}
+
+enableMocking();
 
 const queryClient = new QueryClient();
 
