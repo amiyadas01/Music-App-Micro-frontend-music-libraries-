@@ -1,4 +1,7 @@
-declare module 'musicLibrary/MusicLibraryApp' {
-  const MusicLibraryApp: React.ComponentType
-  export default MusicLibraryApp
+declare module "musicLibrary/MusicLibraryApp" {
+  const MusicLibraryApp: React.ComponentType<{
+    userRole: "admin" | "user" | null;
+    token: string | null;
+  }>;
+  export default MusicLibraryApp;
 }
