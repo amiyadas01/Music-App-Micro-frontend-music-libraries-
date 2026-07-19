@@ -66,7 +66,7 @@ function MusicLibraryContent({
     if (!data) return [];
     // Only filter if user has actually typed something
     if (searchTerm.trim() === "") return data;
-    // Map activeGroup to filter field
+    // Map active group to filter field
     const filterField: "all" | "title" | "artist" | "album" =
       activeGroup === "all" ? "all" : activeGroup;
     return filterSongsByText(data, searchTerm, filterField);
@@ -111,26 +111,10 @@ function MusicLibraryContent({
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-violet/[0.04] via-white to-white">
-      <header className="sticky top-0 z-20 backdrop-blur-xl bg-white/75 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-5">
-          <div className="flex items-center gap-2.5 shrink-0">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet to-blue flex items-center justify-center shadow-md shadow-violet/20">
-              <svg
-                className="w-4.5 h-4.5 w-[18px] h-[18px] text-white"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-              </svg>
-            </div>
-            <div className="hidden sm:block leading-tight">
-              <p className="text-[10px] font-semibold tracking-[0.2em] text-gray-400 uppercase">
-                Library
-              </p>
-              <h1 className="text-sm font-bold text-ink">Wavelength</h1>
-            </div>
-          </div>
-          <div className="flex-1 max-w-xl">
+      <main className="max-w-7xl mx-auto p-6">
+        {/* Search and Add Song */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+          <div className="flex-1 max-w-xl w-full">
             <SongSearchInput
               value={searchTerm}
               onChange={handleSearchChange}
@@ -139,9 +123,7 @@ function MusicLibraryContent({
           </div>
           <AddSongForm userRole={userRole} />
         </div>
-      </header>
 
-      <main className="max-w-7xl mx-auto p-6">
         {hasActualSearch && (
           <p className="text-sm text-gray-500 mb-6" role="status">
             {filteredSongs.length === 0

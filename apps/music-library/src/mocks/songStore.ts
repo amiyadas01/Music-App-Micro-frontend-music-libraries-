@@ -2,7 +2,12 @@ import type { Song } from '@music-library-app/shared-types'
 
 const STORAGE_KEY = 'music-library:admin-songs'
 
-export function getStoredSongs(): Song[] {
+// Extend Song type to include createdAt (for sorting)
+interface SongWithTimestamp extends Song {
+  createdAt?: number
+}
+
+export function getStoredSongs(): SongWithTimestamp[] {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
     return stored ? JSON.parse(stored) : []
@@ -12,11 +17,12 @@ export function getStoredSongs(): Song[] {
   }
 }
 
-export function addStoredSong(song: Omit<Song, 'id'>): Song {
+export function addStoredSong(song: Omit<Song, 'id'>): SongWithTimestamp {
   const storedSongs = getStoredSongs()
-  const newSong: Song = {
+  const newSong: SongWithTimestamp = {
     ...song,
-    id: crypto.randomUUID()
+    id: crypto.randomUUID(),
+    createdAt: Date.now()
   }
   localStorage.setItem(STORAGE_KEY, JSON.stringify([...storedSongs, newSong]))
   return newSong
