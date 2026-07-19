@@ -8,6 +8,11 @@ const MusicLibraryApp = React.lazy(
 export const HomePage: React.FC = () => {
   const { user, logout } = useAuth();
 
+  // ProtectedRoute ensures user is not null
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-violet/[0.04] via-white to-white">
       {/* Header */}
@@ -33,7 +38,9 @@ export const HomePage: React.FC = () => {
 
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <p className="text-sm font-medium text-gray-900">{user.username}</p>
+              <p className="text-sm font-medium text-gray-900">
+                {user.username}
+              </p>
               <p className="text-xs text-gray-500 capitalize">{user.role}</p>
             </div>
             <button
@@ -47,16 +54,17 @@ export const HomePage: React.FC = () => {
       </header>
 
       {/* Main content */}
-      <Suspense fallback={<div className="p-6 flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-gray-200 border-t-violet-500 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-500">Loading music library...</p>
-        </div>
-      </div>}>
-        <MusicLibraryApp
-          userRole={user.role}
-          token=""
-        />
+      <Suspense
+        fallback={
+          <div className="p-6 flex items-center justify-center min-h-[400px]">
+            <div className="text-center">
+              <div className="w-12 h-12 border-4 border-gray-200 border-t-violet-500 rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-gray-500">Loading music library...</p>
+            </div>
+          </div>
+        }
+      >
+        <MusicLibraryApp userRole={user.role} token="" />
       </Suspense>
     </div>
   );

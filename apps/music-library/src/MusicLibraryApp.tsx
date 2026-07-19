@@ -38,12 +38,12 @@ function GlobalKeyframes() {
 }
 
 interface MusicLibraryContentProps {
-  userRole: "admin" | "user" | null;
-  token: string | null;
+  userRole?: "admin" | "user" | null;
+  token?: string | null;
 }
 
 function MusicLibraryContent({
-  userRole,
+  userRole = "user",
   token: _token,
 }: MusicLibraryContentProps) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -173,13 +173,13 @@ function MusicLibraryContent({
 }
 
 interface MusicLibraryAppProps {
-  userRole: "admin" | "user" | null;
-  token: string | null;
+  userRole?: "admin" | "user" | null;
+  token?: string | null;
 }
 
 export default function MusicLibraryApp({
-  userRole,
-  token,
+  userRole = "user",
+  token = "",
 }: MusicLibraryAppProps) {
   return (
     <QueryClientProvider client={queryClient}>
