@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import { useAuth } from "../auth/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const MusicLibraryApp = React.lazy(
   () => import("musicLibrary/MusicLibraryApp"),
@@ -8,12 +7,6 @@ const MusicLibraryApp = React.lazy(
 
 export const HomePage: React.FC = () => {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  if (!user) {
-    navigate("/login");
-    return null;
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-violet/[0.04] via-white to-white">
