@@ -4,6 +4,10 @@
 
 A micro-frontend music library application with a host app and a remote app built with Vite, React, TypeScript, and Module Federation.
 
+### ⚠️ Note
+
+The app uses the public iTunes Search API which may occasionally experience CORS issues. If you encounter problems loading songs, please try again after a few minutes.
+
 ## Online Demos
 
 - **Main App (Host)**: https://micro-frontend-music-app.netlify.app
@@ -18,6 +22,7 @@ A micro-frontend music library application with a host app and a remote app buil
 
 1. Clone the repository
 2. Install dependencies:
+
 ```bash
 pnpm install
 ```
@@ -27,20 +32,25 @@ pnpm install
 ### Local Development
 
 #### Start Music Library Remote
+
 ```bash
 cd apps/music-library
 pnpm dev
 ```
+
 Runs on http://localhost:5001
 
 #### Start Main App (Host)
+
 ```bash
 cd apps/main-app
 pnpm dev
 ```
+
 Runs on http://localhost:5000
 
 ### Build for Production
+
 ```bash
 # Build both apps
 pnpm --filter main-app build
@@ -57,10 +67,10 @@ The app uses MSW (Mock Service Worker) to handle API requests locally, so no int
 
 ## Demo Accounts
 
-| Role   | Username | Password  |
-|--------|----------|-----------|
-| Admin  | admin    | admin123  |
-| User   | user     | user123   |
+| Role  | Username | Password |
+| ----- | -------- | -------- |
+| Admin | admin    | admin123 |
+| User  | user     | user123  |
 
 ## Tech Stack
 
