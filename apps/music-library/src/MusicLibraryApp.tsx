@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useDebouncedCallback } from "./hooks/useDebounced";
 import { useSongsQuery } from "./hooks/useSongsQuery";
